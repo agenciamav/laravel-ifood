@@ -32,6 +32,10 @@ class AddAuthorizationCodeToTeamsTable extends Migration
             $table->text('ifood_refresh_token')
                     ->after('ifood_access_token')
                     ->nullable();
+
+            $table->text('ifood_token_expires_date')
+                    ->after('ifood_refresh_token')
+                    ->nullable();
         });
     }
 

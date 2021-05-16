@@ -2,6 +2,7 @@
 namespace Agenciamav\LaravelIfood\Http\Controllers\Auth;
 
 use GuzzleHttp\Exception\ClientException;
+use Carbon\Carbon;
 
 class IfoodAuth
 {
@@ -18,12 +19,25 @@ class IfoodAuth
     public function __construct()
     {
         $team = request()->user()->currentTeam;
+
         if ($team) {
             $this->grantType = 'authorization_code';
+            
             if (!$team->ifood_access_token) {
+                $response = $this->getToken();
+
+                $team->ifood_access_token = $response->accessToken;
+                $team->ifood_refresh_token = $response->refreshToken;
+                $team->ifood_token_expires_date = Carbon::now()->addSeconds($response->expiresIn)->toDateTimeString();
+                $team->save();
+            } elseif (Carbon::create($team->ifood_token_expires_date)->lte(Carbon::now())) {
+                if ($team->ifood_refresh_token) {
+                    $this->grantType = 'refresh_token';
+                }
                 $response = $this->getToken();
                 $team->ifood_access_token = $response->accessToken;
                 $team->ifood_refresh_token = $response->refreshToken;
+                $team->ifood_token_expires_date = Carbon::now()->addSeconds($response->expiresIn)->toDateTimeString();
                 $team->save();
             }
 
@@ -32,7 +46,7 @@ class IfoodAuth
         } else {
             $this->grantType = 'client_credentials';
             $this->accessToken = $this->getToken();
-            session(['IFOOD_ACCESS_TOKEN' => $this->accessToken]);
+            // session(['IFOOD_ACCESS_TOKEN' => $this->accessToken]);
         }
     }
 
@@ -76,6 +90,7 @@ class IfoodAuth
             'clientSecret' => $this->grantType == 'client_credentials' ? getenv('IFOOD_CLIENT_SECRET') : getenv('IFOOD_DIST_CLIENT_SECRET'),
             'authorizationCode' => request()->user()->currentTeam->ifood_authorization_code,
             'authorizationCodeVerifier' => request()->user()->currentTeam->ifood_authorization_code_verifier,
+            'refreshToken' => $this->grantType == 'refresh_token' ? request()->user()->currentTeam->ifood_refresh_token : null,
         ];
 
         try {
@@ -92,9 +107,19 @@ class IfoodAuth
 
             // $this->accessToken = $response->accessToken;
             // $this->refreshToken = $response->refreshToken;
-
             return  $response;
         } catch (ClientException $e) {
+
+
+            if($e->getCode() == 401) {
+                $team = request()->user()->currentTeam;
+                $team->ifood_access_token = null;
+                $team->ifood_authorization_code = null;
+                $team->ifood_authorization_code_verifier = null;
+                $team->ifood_refresh_token = null;
+                $team->save();
+            }
+
             return $e->getMessage();
         }
     }

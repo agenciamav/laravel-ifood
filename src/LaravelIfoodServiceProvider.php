@@ -4,6 +4,7 @@ namespace Agenciamav\LaravelIfood;
 
 use Illuminate\Support\ServiceProvider;
 use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodAuth;
+use Agenciamav\LaravelIfood\Notifications\NewOrderNotification;
 
 class LaravelIfoodServiceProvider extends ServiceProvider
 {

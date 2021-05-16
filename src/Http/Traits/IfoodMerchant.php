@@ -11,12 +11,11 @@ trait IfoodMerchant
         $this->fillable[] = 'ifood_authorization_code_verifier';
         $this->fillable[] = 'ifood_access_token';
         $this->fillable[] = 'ifood_refresh_token';
+        $this->fillable[] = 'ifood_token_expires_date';
     }
 
-    public static function merchant(...$parameters)
+    public static function isTokenExpired()
     {
-        // dd(request()->user()->currentTeam);
-
-        // $merchant = static::newMerchant() ?: Merchant::merchantForModel(get_called_class());
+        return request()->user()->currentTeam->ifood_token_expires_date;
     }
 }

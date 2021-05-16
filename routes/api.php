@@ -6,11 +6,12 @@ use Agenciamav\LaravelIfood\Http\Controllers\Merchant\Status;
 use Agenciamav\LaravelIfood\Http\Controllers\Merchant\Interruption;
 use Agenciamav\LaravelIfood\Http\Controllers\Catalog\Catalog;
 use Agenciamav\LaravelIfood\Http\Controllers\Catalog\Category;
+use Agenciamav\LaravelIfood\Http\Controllers\Order\Events;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/api/ifood')->group(function () {
     Route::get('/', [Merchant::class, 'getAllMerchants'])->name('ifood.merchant.index');
-    
+
     Route::prefix('/{merchantId}')->group(function () {
         Route::get('/', [Merchant::class, 'getMerchant'])->name('ifood.merchant.show');
         Route::get('/status', [Status::class, 'getAllStatusDetails'])->name('ifood.status.index');
