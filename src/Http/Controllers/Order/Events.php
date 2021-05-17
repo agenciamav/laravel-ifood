@@ -44,13 +44,11 @@ class Events extends IfoodClient
                             'delivery' => $order_details->delivery,
                             'schedule' => null,
                             'indoor' => null,
-                            'takeout' => null
+                            'takeout' => null,
+                            'status' => $event->fullCode
                         ]
                     );
                 }
-
-
-
 
                 if (!IfoodOrderEvent::find($event->id)) {
                     IfoodOrderEvent::create([
@@ -61,16 +59,30 @@ class Events extends IfoodClient
                         'full_code' => $event->fullCode,
                         'created_at' => \Carbon\Carbon::create($event->createdAt)->toDateTimeString(),
                         'acknoledged_at' => null,
-                        ]);
+                    ]);
                 };
+            }
+
+            if ($events) {
+                $this->acknowledgeEvents($events);
             }
         }
 
         return  IfoodOrderEvent::orderBy('created_at', 'asc')->get();
     }
 
-    public function acknowledgeEvents()
+    public function acknowledgeEvents($events)
     {
+
+        // ----------------------
+        $request = $this->client->request('POST', "order/v1.0/events/acknowledgment", [
+            'header' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => $events,
+        ]);
+
+        return $request->getStatusCode() == 202;
     }
 
     public static function sendAcknowledgement($event)

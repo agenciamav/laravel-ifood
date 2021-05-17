@@ -1,4 +1,5 @@
 <?php
+
 namespace Agenciamav\LaravelIfood\Http\Controllers\Auth;
 
 use GuzzleHttp\Exception\ClientException;
@@ -18,11 +19,12 @@ class IfoodAuth
 
     public function __construct()
     {
+
         $team = request()->user()->currentTeam;
 
         if ($team) {
             $this->grantType = 'authorization_code';
-            
+
             if (!$team->ifood_access_token) {
                 $response = $this->getToken();
 
@@ -95,11 +97,11 @@ class IfoodAuth
 
         try {
             $request = $client->request('POST', "authentication/v1.0/oauth/token", [
-                    'allow_redirects' => false,
-                    'header' => [
-                        'Content-Type' => 'application/x-www-form-urlencoded',
-                    ],
-                    'form_params' => $formParams
+                'allow_redirects' => false,
+                'header' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ],
+                'form_params' => $formParams
             ]);
 
             $response = $request->getBody()->getContents();
@@ -111,7 +113,7 @@ class IfoodAuth
         } catch (ClientException $e) {
 
 
-            if($e->getCode() == 401) {
+            if ($e->getCode() == 401) {
                 $team = request()->user()->currentTeam;
                 $team->ifood_access_token = null;
                 $team->ifood_authorization_code = null;

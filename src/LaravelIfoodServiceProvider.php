@@ -4,7 +4,9 @@ namespace Agenciamav\LaravelIfood;
 
 use Illuminate\Support\ServiceProvider;
 use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodAuth;
+use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
 use Agenciamav\LaravelIfood\Notifications\NewOrderNotification;
+use Illuminate\Support\Facades\Route;
 
 class LaravelIfoodServiceProvider extends ServiceProvider
 {
@@ -21,10 +23,11 @@ class LaravelIfoodServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-ifood');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
+        $this->registerRoutes();
+
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-ifood');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations', 'laravel-ifood');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations', 'laravel-ifood');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -65,6 +68,23 @@ class LaravelIfoodServiceProvider extends ServiceProvider
         });
         $this->app->singleton(IfoodClient::class, function () {
             return new IfoodClient();
+        });
+    }
+
+    protected function registerRoutes()
+    {
+        // Route::group([
+        //     'prefix' => 'api/ifood',
+        //     'middleware' => ['auth:sanctum'],
+        // ], function () {
+        //     $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        // });
+
+        Route::group([
+            'prefix' => 'ifood',
+            'middleware' => ['auth:sanctum'],
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
     }
 }
