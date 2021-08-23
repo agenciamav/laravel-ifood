@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Financial;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class Conciliation extends IfoodClient
+class FinancialConciliation
 {
+    use IfoodClient;
     public function listSales()
     {
     }

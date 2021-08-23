@@ -1,5 +1,5 @@
 <template>
-  <app-layout>
+  <div>
     <div
       class="max-w-7xl mx-auto p-10 flex items-center justify-center flex-col"
     >
@@ -22,13 +22,13 @@
         </h2>
         <span
           class="text-center border border-gray-200 rounded-md px-5 py-2 block my-2 w-full text-4xl"
-          >{{ userCode }}</span
+          >{{ client.authorization_code.user_code }}</span
         >
         <br />
         <ul class="text-sm px-5 list-disc">
           <li>
             Acesse o
-            <a :href="verificationUrl" target="_new">portal do parceiro</a>
+            <a :href="client.authorization_code.verification_url" target="_blank">portal do parceiro</a>
             Ifood
           </li>
           <li>
@@ -45,7 +45,7 @@
           <br />
           <br />
           <a
-            :href="verificationUrlComplete"
+            :href="client.authorization_code.verification_url_complete"
             target="_new"
             class="rounded-md bg-red-500 text-white px-8 py-2 mx-auto hover:bg-red-600"
             >Clique aqui</a
@@ -78,19 +78,15 @@
         </form>
       </div>
     </div>
-  </app-layout>
+  </div>
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayout";
 import IfoodHeader from "./Header";
 
 export default {
   props: {
-    userCode: String,
-    authorizationCodeVerifier: String,
-    verificationUrl: String,
-    verificationUrlComplete: String,
+    client: Object
   },
   data() {
     return {
@@ -98,15 +94,14 @@ export default {
     };
   },
   components: {
-    AppLayout,
     IfoodHeader,
-  },
+  }, 
   methods: {
     sendAuthCode() {
       this.$inertia
         .post("/ifood/auth", {
           authorizationCode: this.authorizationCode,
-          authorizationCodeVerifier: this.authorizationCodeVerifier,
+          authorizationCodeVerifier: this.client.authorization_code.authorization_code_verifier,
           //   verificationUrl: this.verificationUrl,
           //   verificationUrlComplete: this.verificationUrlComplete,
           _token: this.$page.props.csrf_token,

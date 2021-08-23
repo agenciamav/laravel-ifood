@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Merchant;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class Status extends IfoodClient
+class MerchantStatus
 {
+    use IfoodClient;
     public function getAllStatusDetails($merchantId)
     {
         $request = $this->client->request('GET', "merchant/v1.0/merchants/$merchantId/status");

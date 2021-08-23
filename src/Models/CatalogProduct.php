@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Catalog;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class Product extends IfoodClient
+class CatalogProduct
 {
+    use IfoodClient;
     public function getProducts($merchantId)
     {
         $request = $this->client->request(

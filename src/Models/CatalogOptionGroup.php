@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Catalog;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class OptionGroup extends IfoodClient
+class CatalogOptionGroup
 {
+    use IfoodClient;
     public function createOptionGroup()
     {
     }

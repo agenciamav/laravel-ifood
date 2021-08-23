@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Merchant;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class Interruption extends IfoodClient
+class MerchantInterruption
 {
+    use IfoodClient;
     public function getInterruption($merchantId)
     {
         $request = $this->client->request('GET', "merchant/v1.0/merchants/$merchantId/interruptions");

@@ -1,12 +1,10 @@
 <template>
-  <app-layout>
-    <template #header v-if="merchant">
-      <IfoodHeader>
-        <template #title>
-          {{ merchant[0].name }}
-        </template>
-      </IfoodHeader>
-    </template>
+  <div>
+    <IfoodHeader v-if="merchant">
+      <template #title>
+        {{ merchant[0].name }}
+      </template>
+    </IfoodHeader>
 
     <div
       class="max-w-7xl mx-auto p-6 flex items-center flex-col h-full min-h-screen"
@@ -86,11 +84,10 @@
         >Conectar ao Ifood</a
       >
     </div> -->
-  </app-layout>
+  </div>
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayout";
 import IfoodHeader from "./Header";
 
 export default {
@@ -98,7 +95,6 @@ export default {
     merchant: Object,
   },
   components: {
-    AppLayout,
     IfoodHeader,
   },
 };

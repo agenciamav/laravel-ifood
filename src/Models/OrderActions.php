@@ -1,11 +1,12 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Http\Controllers\Order;
+namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\Http\Controllers\Auth\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodClient;
 
-class Actions extends IfoodClient
+class OrderActions
 {
+    use IfoodClient;
     public function confirm($id)
     {
         $request = $this->client->request('POST', "order/v1.0/orders/$id/confirm");
