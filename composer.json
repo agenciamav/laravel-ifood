@@ -1,6 +1,6 @@
 {
 	"name": "agenciamav/laravel-ifood",
-	"description": "A Laravel package to consume official Ifood APIs",
+	"description": "Pacote Laravel para integração com as novas APIs do Ifood.",
 	"keywords": [
 		"agenciamav",
 		"laravel-ifood",
