@@ -1,11 +1,5 @@
 <template>
   <div>
-    <IfoodHeader v-if="merchant">
-      <template #title>
-        {{ merchant[0].name }}
-      </template>
-    </IfoodHeader>
-
     <div
       class="max-w-7xl mx-auto p-6 flex items-center flex-col h-full min-h-screen"
     >
@@ -88,14 +82,9 @@
 </template>
 
 <script>
-import IfoodHeader from "./Header";
-
 export default {
   props: {
     merchant: Object,
-  },
-  components: {
-    IfoodHeader,
-  },
+  }
 };
 </script>

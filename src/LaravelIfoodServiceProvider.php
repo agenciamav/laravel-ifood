@@ -2,6 +2,7 @@
 
 namespace Agenciamav\LaravelIfood;
 
+use Agenciamav\LaravelIfood\IfoodAuthorization;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -58,21 +59,31 @@ class LaravelIfoodServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-ifood');
+       
 
         // Register the main class to use with the facade
-        // $this->app->singleton(LaravelIfood::class, function () {
-        //     return new LaravelIfood();
-        // });
+        $this->app->singleton(
+            IfoodAuthentication::class,
+            function () {
+                return new IfoodAuthentication();
+            }
+        );
+        $this->app->singleton(
+            IfoodAuthorization::class,
+            function () {
+                return new IfoodAuthorization();
+            }
+        );
     }
 
     protected function registerRoutes()
     {
-        // Route::group([
-        //     'prefix' => 'api/ifood',
-        //     'middleware' => ['auth:sanctum'],
-        // ], function () {
-        //     $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
-        // });
+        Route::group([
+            'prefix' => 'api/ifood',
+            'middleware' => ['api'],
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        });
 
         Route::group([
             'prefix' => 'ifood',

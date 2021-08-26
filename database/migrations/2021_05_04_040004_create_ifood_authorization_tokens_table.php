@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuthorizationCodesTable extends Migration
+class CreateIfoodAuthorizationTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAuthorizationCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ifood_authorization_codes', function (Blueprint $table) {
+        Schema::create('ifood_authorization_tokens', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->morphs('client');
@@ -24,6 +24,7 @@ class CreateAuthorizationCodesTable extends Migration
 
             $table->text('authorization_code')->nullable();
             $table->text('authorization_code_verifier')->nullable();
+            $table->text('authorization_code_expires_date')->nullable();
 
             $table->text('verification_url')->nullable();
             $table->text('verification_url_complete')->nullable();
@@ -43,6 +44,6 @@ class CreateAuthorizationCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ifood_authorization_codes');
+        Schema::dropIfExists('ifood_authorization_tokens');
     }
 }

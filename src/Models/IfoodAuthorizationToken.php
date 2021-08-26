@@ -2,48 +2,35 @@
 
 namespace Agenciamav\LaravelIfood\Models;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
-class IfoodAuthorizationCode extends Model
+class IfoodAuthorizationToken extends Model
 {
-
-	protected $userCode;
-	protected $authorizationCode;
-	protected $authorizationCodeVerifier;
-	protected $verificationUrl;
-	protected $verificationUrlComplete;
-
-	/**
-	 * The attributes that should be cast to native types.
-	 *
-	 * @var array
-	 */
+	protected $http;
+	protected $grantType;
+	// protected $accessToken;
+	// protected $refreshToken;
 	protected $casts = [
 		'token_expires_date' => 'datetime',
 		'is_valid' => 'boolean',
 	];
-
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
 	protected $fillable = [
-		'merchant_id',
+		'merchant_id',  // ! important
 		'user_code',
 		'authorization_code',
 		'authorization_code_verifier',
+		'authorization_code_expires_date',
 		'verification_url',
 		'verification_url_complete',
 		'access_token',
 		'refresh_token',
 		'token_expires_date',
 	];
-
 	protected $appends = [
 		'is_valid',
+		'is_expired',
 	];
 
 	/**
@@ -58,7 +45,7 @@ class IfoodAuthorizationCode extends Model
 
 	public function getIsValidAttribute()
 	{
-		if ($this->token_expires_date > Carbon::now()) {
+		if ($this->authorization_code_expires_date > Carbon::now()) {
 			return true;
 		}
 
@@ -66,5 +53,10 @@ class IfoodAuthorizationCode extends Model
 		$this->delete($this->id);
 
 		return false;
+	}
+
+	public function getIsExpiredAttribute()
+	{
+		return !$this->is_valid;
 	}
 }

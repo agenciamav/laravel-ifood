@@ -1,11 +1,11 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Models;
+namespace Agenciamav\LaravelIfood\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
-use Agenciamav\LaravelIfood\Models\IfoodOrderEvent;
+use Agenciamav\LaravelIfood\Controllers\IfoodOrderEvent;
 use Agenciamav\LaravelIfood\IfoodClient;
 
 class OrderEvents

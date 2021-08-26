@@ -2,32 +2,59 @@
 
 namespace Agenciamav\LaravelIfood\Models;
 
-use Agenciamav\LaravelIfood\IfoodClient;
+use Agenciamav\LaravelIfood\IfoodAuthorization;
+use Agenciamav\LaravelIfood\IfoodAuthentication;
+use Illuminate\Support\Facades\Http;
 
 class Merchant
 {
-    use IfoodClient;
-    public function getAllMerchants()
+    protected $name;
+    protected $corporateName;
+    protected $description;
+    protected $averageTicket;
+    protected $exclusive;
+    protected $type;
+    protected $status;
+    protected $createdAt;
+    protected $address;
+
+    protected $access_token;
+
+    public $http;
+
+    public function __construct()
     {
-        $request = $this->client->request('GET', "merchant/v1.0/merchants");
-        $response = $request->getBody();
-        return $response->getContents();
+        $this->access_token = IfoodAuthentication::accessToken();
+
+        $this->http = Http::withOptions([
+            'base_uri'  => 'https://merchant-api.ifood.com.br/',
+        ])->withToken($this->access_token);
     }
 
-    public function getMerchant($merchantId)
+    public function fetchAllMerchants()
     {
-        $request = $this->client->request('GET', "merchant/v1.0/merchants/$merchantId");
-        $response = $request->getBody();
-        return $response->getContents();
+        $request = $this->http->get("merchant/v1.0/merchants");
+        return $request->collect();
     }
 
-    public static function all()
+    public function fetchMerchant($merchantId)
     {
-        return json_decode(app(Merchant::class)->getAllMerchants());
+        $request = $this->http->get("merchant/v1.0/merchants/$merchantId");
+        return $request->collect();
+    }    
+
+    /**
+     * FACADE FUNCTIONS
+     */
+    public static function all($columns = [])
+    {
+        return json_decode(app(Merchant::class)->fetchAllMerchants());
     }
 
     public static function show($merchantId)
     {
-        return app(Merchant::class)->getMerchant($merchantId);
+        return app(Merchant::class)->fetchMerchant($merchantId);
     }
+
+
 }

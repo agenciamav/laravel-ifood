@@ -1,9 +1,10 @@
 <?php
-namespace Agenciamav\LaravelIfood\Models;
+
+namespace Agenciamav\LaravelIfood\Controllers\Ifood;
 
 use Illuminate\Database\Eloquent\Model;
 
-class IfoodOrderEvent extends Model
+class OrderEvent extends Model
 {
     public $timestamps = false;
     protected $fillable = [
