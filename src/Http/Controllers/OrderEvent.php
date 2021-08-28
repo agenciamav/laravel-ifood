@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Controllers\Ifood;
+namespace Agenciamav\LaravelIfood\Http\Controllers\Ifood;
 
 use Illuminate\Database\Eloquent\Model;
 

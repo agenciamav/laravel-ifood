@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciamav\LaravelIfood\Controllers;
+namespace Agenciamav\LaravelIfood\Http\Controllers;
 
 use Agenciamav\LaravelIfood\IfoodClient;
 
