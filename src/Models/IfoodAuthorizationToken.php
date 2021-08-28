@@ -8,6 +8,8 @@ use Carbon\Carbon;
 
 class IfoodAuthorizationToken extends Model
 {
+	protected $table = 'ifood_authorizationS';
+
 	protected $http;
 	protected $grantType;
 	// protected $accessToken;
@@ -17,7 +19,7 @@ class IfoodAuthorizationToken extends Model
 		'is_valid' => 'boolean',
 	];
 	protected $fillable = [
-		'merchant_id',  // ! important
+		// 'merchant_id',  // ! important
 		'user_code',
 		'authorization_code',
 		'authorization_code_verifier',
@@ -38,7 +40,7 @@ class IfoodAuthorizationToken extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
-	public function client()
+	public function authorizable()
 	{
 		return $this->morphTo();
 	}
@@ -50,7 +52,7 @@ class IfoodAuthorizationToken extends Model
 		}
 
 		// if is invalid, delete it
-		$this->delete($this->id);
+		$this->delete();
 
 		return false;
 	}

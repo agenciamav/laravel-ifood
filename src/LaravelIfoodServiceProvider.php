@@ -67,13 +67,7 @@ class LaravelIfoodServiceProvider extends ServiceProvider
             function () {
                 return new IfoodAuthentication();
             }
-        );
-        $this->app->singleton(
-            IfoodAuthorization::class,
-            function () {
-                return new IfoodAuthorization();
-            }
-        );
+        );        
     }
 
     protected function registerRoutes()

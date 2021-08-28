@@ -37,22 +37,8 @@ class IfoodAuthorization
             'clientSecret' => getenv('IFOOD_CLIENT_SECRET'),
             'authorizationCode' => $authorization_code,
             'authorizationCodeVerifier' => $authorization_code_verifier,
-            // 'refreshToken' => $this->IfoodAuthorizationToken->grant_type == 'refresh_token' ? $this->IfoodAuthorizationToken->refresh_token : null,
+            // 'refreshToken' => $this->ifoodAuthorization->grant_type == 'refresh_token' ? $this->ifoodAuthorization->refresh_token : null,
         ]);
-        $response = $request->json();
-
-        // Check if the response contains ERROR
-        if (isset($response['error'])) {
-            dd('requestAccessToken', $authorization_code, $authorization_code_verifier, $response);
-            return $response;
-        }
-
-
-        if (isset($response['accessToken'])) {
-            $this->access_token = $response['accessToken'];
-            return $response;
-        }
-
-        return false;
+        return $request->json();
     }
 }

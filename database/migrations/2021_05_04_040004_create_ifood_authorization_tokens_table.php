@@ -13,15 +13,14 @@ class CreateIfoodAuthorizationTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('ifood_authorization_tokens', function (Blueprint $table) {
+        Schema::create('ifood_authorizations', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->morphs('client');
+            $table->morphs('authorizable');
 
-            $table->text('merchant_id')->nullable();
+            // $table->text('merchant_id')->nullable();
 
             $table->text('user_code')->nullable();
-
             $table->text('authorization_code')->nullable();
             $table->text('authorization_code_verifier')->nullable();
             $table->text('authorization_code_expires_date')->nullable();
@@ -44,6 +43,6 @@ class CreateIfoodAuthorizationTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ifood_authorization_tokens');
+        Schema::dropIfExists('ifood_authorizations');
     }
 }

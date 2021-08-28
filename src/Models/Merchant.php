@@ -56,5 +56,4 @@ class Merchant
         return app(Merchant::class)->fetchMerchant($merchantId);
     }
 
-
 }

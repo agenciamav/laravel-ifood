@@ -9,8 +9,8 @@ Route::get('/', function () {
 	$user = request()->user();
 
 	// returns the user code to paste in the ifood portal
-	// $user_code = $user->getUserCode();
-	// dd($user_code);
+	$user_code = $user->getUserCode();
+	dd($user_code);
 
 	// Get a new access token, passing the authorization code
 	$access_token = $user->getAccessToken('DJSF-PSGD');
@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 	// Client (User | Store | Any ... )
 	// $client = request()->user();
-	// $ifoodAuthorizationToken = $client->ifoodAuthorizationToken;    
+	// $ifoodAuthorizationToken = $client->ifoodAuthorization;    
 
 	// $user_code = IfoodAuthorization::getUserCode();
 
@@ -61,7 +61,7 @@ Route::get('/', function () {
 Route::get('/auth', function () {
 	// Client (User | Store | Any ... )
 	$client = request()->user();
-	$ifoodAuthorizationToken = $client->IfoodAuthorizationToken;
+	$ifoodAuthorizationToken = $client->ifoodAuthorization;
 	dd($ifoodAuthorizationToken);
 	$userCode   = IfoodAuthorization::getUserCode();
 
