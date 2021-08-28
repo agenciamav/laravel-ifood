@@ -1,4 +1,6 @@
-# Laravel Ifood 
+<p align="center">
+	<img src="https://raw.githubusercontent.com/agenciamav/laravel-ifood/master/resources/img/laravelifood.jpg" width="100%">
+</p>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/agenciamav/laravel-ifood.svg?style=flat-square)](https://packagist.org/packages/agenciamav/laravel-ifood)
 [![Total Downloads](https://img.shields.io/packagist/dt/agenciamav/laravel-ifood.svg?style=flat-square)](https://packagist.org/packages/agenciamav/laravel-ifood)
