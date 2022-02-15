@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class IfoodAuthorizationToken extends Model
 {
-	protected $table = 'ifood_authorizationS';
+	protected $table = 'ifood_authorizations';
 
 	protected $http;
 	protected $grantType;
